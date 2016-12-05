@@ -1,0 +1,34 @@
+package pl.smyt.smsgateway.utility;
+
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * Created by aeros0ul on 05.12.2016.
+ */
+
+public class CalendarUtils {
+
+    public static String getDurationBreakdown(Long mil) {
+
+        long days = TimeUnit.MILLISECONDS.toDays(mil);
+        mil -= TimeUnit.DAYS.toMillis(days);
+        long hours = TimeUnit.MILLISECONDS.toHours(mil);
+        mil -= TimeUnit.HOURS.toMillis(hours);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(mil);
+        mil -= TimeUnit.MINUTES.toMillis(minutes);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(mil);
+
+        String s = new String();
+
+        if(days > 0) s += (days > 1) ? days + " Days " : days + " Day ";
+        if(hours > 0) s += (hours > 1) ? hours + " Hours " : hours + " Hour ";
+        if(minutes > 0) s += (minutes > 1) ? minutes + " Minutes " : minutes + " Minute ";
+        if(seconds > 0) s += (seconds > 1) ? seconds + " Seconds " : seconds + " Second ";
+
+        return s;
+    }
+}
