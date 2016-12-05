@@ -31,6 +31,7 @@ import pl.smyt.smsgateway.R;
 import pl.smyt.smsgateway.adapter.CustomSystemCursorAdapter;
 import pl.smyt.smsgateway.reminder.ReminderManager;
 import pl.smyt.smsgateway.utility.DatabaseHelper;
+import pl.smyt.smsgateway.utility.CalendarUtils;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -41,6 +42,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView listView;
 
     private TextView consoleText = null;
+    private TextView syncTimeLabel = null;
 
     String[] SystemListContextMenuItems;
 
@@ -65,6 +67,8 @@ public class MainActivity extends ActionBarActivity {
         registerForContextMenu(listView);
         SystemListContextMenuItems = getResources().getStringArray(R.array.SystemListContextMenu);
 
+        syncTimeLabel = (TextView) findViewById(R.id.label3);
+        syncTimeLabel.setText("Polling interval: " + CalendarUtils.getDurationBreakdown(Long.parseLong(db.getTimeToPoll())) );
 
         setReminderToPoll(false);
 
@@ -393,6 +397,8 @@ public class MainActivity extends ActionBarActivity {
                                     db.updatePollTime("1", time_in_ms + "");
                                     Log.e(TAG, "Time in ms: " + time_in_ms);
 
+                                    syncTimeLabel.setText("Polling interval: " + CalendarUtils.getDurationBreakdown(Long.parseLong(db.getTimeToPoll())));
+                                    
                                     setReminderToPoll(true);
 
                                 } else {
